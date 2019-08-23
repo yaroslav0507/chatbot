@@ -12,14 +12,14 @@ import { IChatState } from '../appReducer';
 const defaultSiteId = '99999';
 
 const Root = styled.div`
-  position: fixed;
   right: 0;
   bottom: 0;
   display: flex;
+  position: fixed;
+  max-width: 100%;
+  max-height: 100%;
   flex-direction: column;
   align-items: flex-end;
-  max-height: 100%;
-  max-width: 100%;
   
   @media (min-width: 576px) {
     right: 15px;
@@ -27,19 +27,19 @@ const Root = styled.div`
 `;
 
 const ChatComponent = styled.div`
+  z-index: 3;
   width: 375px;
+  display: flex;
   max-width: 100%;
   max-height: 100%;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.5);
-  border-radius: 10px 10px 0 0;
   overflow: hidden;
-  display: flex;
   flex-direction: column;
-  z-index: 3;
   transition: all .3s ease;
-  transform: translateY(${props => props.visible ? 0 : '50px'});
-  opacity: ${props => props.visible ? 1 : 0}; 
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.5);
+  opacity: ${props => props.visible ? 1 : 0};
   height: ${props => props.visible ? '1020px' : '10px'}; 
+  transform: translateY(${props => props.visible ? 0 : '50px'});
 `;
 
 interface IChatProps extends IChatDispatchProps, IChatState {}

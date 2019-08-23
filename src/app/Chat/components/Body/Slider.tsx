@@ -7,31 +7,31 @@ import { IInfoCard } from '../../interfaces';
 const Carousel = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: relative;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Header = styled.div`
-  font-size: 18px;
   color: #363636;
+  font-size: 18px;
   font-weight: 500;
   line-height: 23px;
 `;
 
 const SlideWrapper = styled.div`
   display: flex;
+  height: 200px;
   align-items: center;
   justify-content: center;
-  height: 200px;
 `;
 
 const CarouselNav = styled.div`
   height: 100%;
   display: flex;
+  transition: opacity 
   align-items: center;
   justify-content: center;
-  transition: opacity 
   opacity: ${props => props.disabled ? '.3' : '1'};
   
   &:hover {

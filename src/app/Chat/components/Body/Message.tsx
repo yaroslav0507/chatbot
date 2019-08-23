@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import { styleHoverOpacity } from '../../../../styles/shared';
 
 const Message = styled.div`
-  padding: 15px;
+  clear: both;
   width: 300px;
+  display: flex;
+  padding: 15px;
   max-width: 87%;
   overflow: hidden;
   line-height: 18px;
   border-radius: 10px;
   margin-bottom: 15px;
-  clear: both;
-  display: flex;
   align-items: center;
   justify-content: flex-start;
 `;

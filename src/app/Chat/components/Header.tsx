@@ -3,18 +3,18 @@ import ChatBotIcon from '../../../images/Chatbot-icon.svg';
 import IconClose from '../../../images/outline-clear-24px.svg';
 import styled from 'styled-components';
 import { styleHoverOpacity } from '../../../styles/shared';
-import { IChatBotConfig } from '../interfaces';
-
 const Root = styled.div`
-  position: relative;
-  height: 82px;
   width: 100%;
-  background-color: ${props => props.background || '#162A3F'};
+  height: 82px;
   padding: 16px;
-  color: ${props => props.color || '#fff'};
   display: flex;
+  position: relative;
   align-items: center;
+  color: ${props => props.color || '#fff'};
+  background-color: ${props => props.background || '#162A3F'};
 `;
+
+import { IChatBotConfig } from '../interfaces';
 
 const SiteName = styled.div`
   font-size: 20px;
@@ -22,12 +22,12 @@ const SiteName = styled.div`
 `;
 
 const CloseChat = styled(IconClose)`
-  position: absolute;
   top: 12px;
+  fill: #fff;
   right: 14px;
   opacity: .7;
   width: 20px;
-  fill: #fff;
+  position: absolute;
   ${styleHoverOpacity};
 `;
 

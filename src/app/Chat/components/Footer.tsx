@@ -36,18 +36,25 @@ const IconSend = styled(IconPlane)`
 const ButtonSend = styled.button`
   width: 50px;
   height: 50px;
+  border: none;
+  display: flex;
   margin-top: -2px;
   margin-right: -7px;
   border-radius: 100%;
-  transition: background .3s ease;
-  display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  background-color: transparent;
+  transition: background .3s ease;
   
   &:hover {
     cursor: pointer;
     background: #eee;
+  }
+  
+  &:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+    background: transparent;
   }
 `;
 
@@ -60,9 +67,12 @@ export const Footer: React.FC<IFooterProps> = (props) => {
   const [message, setMessage] = useState('');
 
   const onSubmit = (event) => {
-    setMessage('');
     event.preventDefault();
-    props.onSubmit(message);
+
+    if (message) {
+      props.onSubmit(message);
+      setMessage('');
+    }
   };
 
   return (
@@ -76,7 +86,7 @@ export const Footer: React.FC<IFooterProps> = (props) => {
 
       <ButtonSend
         type="submit"
-        disabled={props.loading}
+        disabled={props.loading || !message}
       >
         <IconSend/>
       </ButtonSend>

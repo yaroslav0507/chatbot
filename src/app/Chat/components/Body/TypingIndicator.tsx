@@ -12,29 +12,29 @@ const typeAnimationKeyFrame = keyframes`
 `;
 
 const Root = styled.div`
-  height: 49px;
+  left: 15px;
   width: 90px;
-  border-radius: 10px;
-  background-color: #E5E5E5;
+  height: 49px;
+  bottom: 70px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 0 17px;
   position: absolute;
-  bottom: 70px;
-  left: 15px;
+  border-radius: 10px;
+  align-items: center;
   transition: all .3s ease;
+  background-color: #E5E5E5;
+  justify-content: space-between;
   
   transform: translateY(${props => props.visible ? 0 : '50px'});
   opacity: ${props => props.visible ? 1 : 0};  
 `;
 
 const Dot = styled.div`
-  display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: #aaaaaa;
+  display: inline-block;
   animation: ${typeAnimationKeyFrame} 1.3s linear infinite;
 
   &:nth-child(2) {

@@ -6,12 +6,12 @@ import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import { InfoCard } from './InfoCard';
 
 const Root = styled.div`
-  position: relative;
-  padding: 15px 15px 65px;
-  overflow-x: hidden;
-  overflow-y: scroll;
   flex: 1;
+  overflow-x: hidden;
+  position: relative;
+  overflow-y: scroll;
   background-color: #fff;
+  padding: 15px 15px 65px;
 `;
 
 const MessageEnd = styled.div`

@@ -6,12 +6,12 @@ import { IInfoCard } from '../../interfaces';
 
 const Root = styled(AnswerTemplate)`
   height: auto;
-  position: relative;
   padding: 15px;
+  min-height: 160px;
+  position: relative;
   border-radius: 10px;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 160px;
 `;
 
 interface IInfoCardProps {
