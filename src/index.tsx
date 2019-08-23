@@ -7,7 +7,6 @@ import axios from 'axios';
 import 'babel-polyfill';
 import 'url-search-params-polyfill';
 import 'formdata-polyfill';
-import 'moment-timezone';
 import './styles/main.scss';
 // tslint:enable:no-import-side-effect
 

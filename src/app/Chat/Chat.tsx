@@ -43,7 +43,7 @@ const ChatComponent = styled.div`
   height: ${props => props.visible ? '1020px' : '10px'}; 
 `;
 
-interface IChatProps extends IChatDispatchProps, IChatStateProps, RouteComponentProps<{siteId: string}> {}
+interface IChatProps extends IChatDispatchProps, IChatStateProps {}
 
 export const Chat: React.FC<IChatProps> = (props) => {
   const [popupVisible, setPopupVisible] = useState(false);
