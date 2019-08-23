@@ -6,11 +6,14 @@ import { createAction } from 'typesafe-actions';
 import { CHAT_CONFIG_LOADED, CHAT_MESSAGE_RECEIVED, USER_MESSAGE_SENT } from './chatReducer';
 import uuid from 'uuid';
 
-const initializationQuery = 'Hello';
+export const initializationQuery = 'Hello';
+
 const getStoredSiteId = () => sessionStorage.getItem('siteId');
 const getStoredSessionId = () => sessionStorage.getItem('sessionId');
 
 export const loadInitialConfiguration = (siteId: string) => (dispatch: Dispatch<IRootState>) => {
+  dispatch(sendMessage(initializationQuery));
+
   const onDataLoadedAction = createAction(CHAT_CONFIG_LOADED, (data: IChatBotConfig) => ({
     type: CHAT_CONFIG_LOADED,
     data,
@@ -34,7 +37,7 @@ export const loadInitialConfiguration = (siteId: string) => (dispatch: Dispatch<
   });
 };
 
-export const sendMessage = (query: string = initializationQuery) => (dispatch: Dispatch<IRootState>) => {
+export const sendMessage = (query: string) => (dispatch: Dispatch<IRootState>) => {
   const onUserMessageSent = createAction(USER_MESSAGE_SENT, (message: string) => ({
     type: USER_MESSAGE_SENT,
     message

@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { loadInitialConfiguration, sendMessage } from './chatActions';
 
 export interface IChatDispatchProps {
-  sendMessage(query: string): void;
+  sendMessage(query?: string): void;
   initialize(siteId: string): void;
 }
 

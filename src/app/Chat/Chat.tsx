@@ -51,7 +51,6 @@ export const Chat: React.FC<IChatProps> = (props) => {
   // Called once, when component is mounted
   useEffect(() => {
     props.initialize(defaultSiteId);
-    props.sendMessage('Hello');
   }, []);
 
   // Called when propertyId is changed
