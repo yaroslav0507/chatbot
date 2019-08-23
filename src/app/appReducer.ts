@@ -1,22 +1,19 @@
 import { combineReducers } from 'redux';
-import { routerReducer as router, RouterState } from 'react-router-redux';
 import { chatReducer } from './Chat/chatReducer';
-import { IChatBotInitialConfig } from './Chat/interfaces';
+import { IChatBotConfig, IChatBotResponse } from './Chat/interfaces';
 
-export interface IAppReducers {
-  config: IChatBotInitialConfig;
+export interface IChatState {
+  config: IChatBotConfig;
+  history: IChatBotResponse[];
+  loading: boolean;
 }
 
 export interface IRootState {
-  router: RouterState;
-  app: IAppReducers;
+  chat: IChatState;
 }
 
 const appReducer = combineReducers<IRootState>({
-  router,
-  app: combineReducers({
-    config: chatReducer
-  })
+  chat: chatReducer
 });
 
 export const rootReducer = (state: any, action: any) => {

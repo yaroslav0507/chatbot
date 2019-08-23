@@ -1,8 +1,9 @@
-import React, { RefObject, useEffect } from 'react';
+import React, {Fragment, RefObject, useEffect } from 'react';
 import styled from 'styled-components';
 import { AnswerTemplate, BotMessage, CustomerMessage } from './Message';
-import { InfoCard } from './InfoCard';
+import { IChatBotConfig, IChatBotResponse } from '../../interfaces';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
+import { InfoCard } from './InfoCard';
 
 const Root = styled.div`
   position: relative;
@@ -19,89 +20,70 @@ const MessageEnd = styled.div`
 `;
 
 interface IBodyProps {
-  botMessageBgColor: string;
-  botMessageTextColor: string;
-  userMessageBgColor: string;
-  userMessageTextColor: string;
+  history: IChatBotResponse[];
+  config: IChatBotConfig;
+  onQuickReply(message: string): void;
 }
 
-export const Body: React.FC<IBodyProps> = (props) => {
+export const Body: React.FC<IBodyProps> = ({config, history, onQuickReply}) => {
   const chatBodyRef: RefObject<HTMLDivElement> = React.createRef();
 
   const scrollToBottom = () => {
     const bottom = document.getElementById('chat-body-bottom');
 
     if (bottom) {
-      setTimeout(() => {
-        scrollIntoView(bottom, {
-          scrollMode: 'if-needed',
-          block: 'center',
-          inline: 'center',
-        });
-      }, 100);
+      scrollIntoView(bottom, {
+        scrollMode: 'if-needed',
+        block: 'center',
+        inline: 'center',
+      });
     }
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [history]);
+
+  const renderMessage = (message: IChatBotResponse, index: number) => {
+    if (message.payload) {
+      return (
+       <Fragment key={index}>
+         <BotMessage
+           bgColor={config.chatbotAceConversationBubbleColor}
+           textColor={config.chatbotAceConversationBubbleTextColor}
+         >
+           {message.result}
+         </BotMessage>
+
+         {message.payload.infoCard && <InfoCard data={message.payload.infoCard}/>}
+
+         {message.payload.quickReply.map((reply) => (
+           <AnswerTemplate
+             key={reply.value}
+             inline={reply.display !== 'block'}
+             onClick={() => onQuickReply(reply.value)}
+           >
+             {reply.text}
+           </AnswerTemplate>
+         ))}
+       </Fragment>
+      )
+    } else {
+      return (
+        <CustomerMessage
+          key={index}
+          bgColor={config.chatbotUserConversationBubbleColor}
+          textColor={config.chatbotUserConversationBubbleTexColor}
+        >
+          {message.result}
+        </CustomerMessage>
+      )
+    }
+  };
 
   return (
     <Root ref={chatBodyRef}>
-      <BotMessage
-        bgColor={props.botMessageBgColor}
-        textColor={props.botMessageTextColor}
-      >
-        Hi! I'm ACE, your virtual leasing assistant.
-        Thank you for contacting Scottsdale Park Place.
-        I can help schedule a tour, check availability,
-        and answer common leasing questions.
-        What can I get you information on?
-      </BotMessage>
-
-      <AnswerTemplate>Check pricing and availability </AnswerTemplate>
-      <AnswerTemplate>Schedule a tour</AnswerTemplate>
-      <AnswerTemplate>Apartment amenities</AnswerTemplate>
-
-      <CustomerMessage
-        bgColor={props.userMessageBgColor}
-        textColor={props.userMessageTextColor}
-      >
-        Check pricing and availability
-      </CustomerMessage>
-
-      <BotMessage
-        bgColor={props.botMessageBgColor}
-        textColor={props.botMessageTextColor}
-      >
-        How many bedrooms do you need?
-      </BotMessage>
-
-      {
-        [0, 1, 2, 3].map(i => (
-          <AnswerTemplate inline key={i}>{i}</AnswerTemplate>
-        ))
-      }
-
-      <CustomerMessage
-        bgColor={props.userMessageBgColor}
-        textColor={props.userMessageTextColor}
-      >
-        I would like a one bedroom next month
-      </CustomerMessage>
-
-      <BotMessage
-        bgColor={props.botMessageBgColor}
-        textColor={props.botMessageTextColor}
-      >
-        Okay! Pricing and availability are subject to change.
-        We do have a 1 bedroom available on Thursday, August 1st starting at $1,062.
-        Would you like to come in to see one?
-      </BotMessage>
-
-      <InfoCard/>
-      <AnswerTemplate inline>Take a Tour</AnswerTemplate>
-      <AnswerTemplate inline>No Thanks</AnswerTemplate>
+      {history.map((record, index) => renderMessage(record, index))}
 
       <MessageEnd id="chat-body-bottom"/>
     </Root>

@@ -1,41 +1,61 @@
 import axios, { AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { IRootState } from '../appReducer';
-import { IChatBotInitialConfig } from './interfaces';
+import { IChatBotConfig, IChatBotResponse } from './interfaces';
 import { createAction } from 'typesafe-actions';
-import { CHAT_CONFIG_LOADED } from './chatReducer';
+import { CHAT_CONFIG_LOADED, CHAT_MESSAGE_RECEIVED, USER_MESSAGE_SENT } from './chatReducer';
+import uuid from 'uuid';
 
-const mockResponse = {
-  'propertyId': 99999,
-  'propertyName': 'Scottsdale Park Place',
-  'chatbotPopupNotificationMessage': 'Ask me a common leasing question!',
-  'chatbotPopupNotificationTime': 300,
-  'chatbotHeaderTitle': 'Scottsdale Park Place',
-  'chatbotHeaderDescription': 'Your virtual leasing assistant.',
-  'chatbotTriggerIconUrl': 'https://lh-int-ace-ai.s3.amazonaws.com/dist/assets/header-icon.png',
-  'chatbotTriggerColor': '#F37A1F',
-  'chatbotHeaderIconUrl': 'https://lh-int-ace-ai.s3.amazonaws.com/dist/assets/trigger-icon.png',
-  'chatbotHeaderColor': '#162A3F',
-  'chatbotHeaderTextColor': '#FFFFFF',
-  'chatbotAceConversationBubbleColor': '#E5E5E5',
-  'chatbotAceConversationBubbleTextColor': '#363636',
-  'chatbotUserConversationBubbleColor': '#3D8FEE',
-  'chatbotUserConversationBubbleTexColor': '#FFFFFF'
-};
+const initializationQuery = 'Hello';
+const getStoredSiteId = () => sessionStorage.getItem('siteId');
+const getStoredSessionId = () => sessionStorage.getItem('sessionId');
 
 export const loadInitialConfiguration = (siteId: string) => (dispatch: Dispatch<IRootState>) => {
-  const onDataLoadedAction = createAction(CHAT_CONFIG_LOADED, (data: IChatBotInitialConfig) => ({
+  const onDataLoadedAction = createAction(CHAT_CONFIG_LOADED, (data: IChatBotConfig) => ({
     type: CHAT_CONFIG_LOADED,
     data,
   }));
 
+  if (!getStoredSiteId()) {
+    sessionStorage.setItem('siteId', siteId);
+  }
+
+  if (!getStoredSessionId()) {
+    const sessionId = uuid.v4();
+    sessionStorage.setItem('sessionId', sessionId);
+  }
+
   axios.get(`https://aceai-dev.leasehawk.com/api/AceChatbotStyle`, {
-    data: {
+    params: {
       siteId
     }
-  }).then((response: AxiosResponse<IChatBotInitialConfig>) => {
+  }).then((response: AxiosResponse<IChatBotConfig>) => {
     dispatch(onDataLoadedAction(response.data));
-  }).catch(() => {
-    dispatch(onDataLoadedAction(mockResponse));
+  });
+};
+
+export const sendMessage = (query: string = initializationQuery) => (dispatch: Dispatch<IRootState>) => {
+  const onUserMessageSent = createAction(USER_MESSAGE_SENT, (message: string) => ({
+    type: USER_MESSAGE_SENT,
+    message
+  }));
+
+  const onMessageReceived = createAction(CHAT_MESSAGE_RECEIVED, (data: IChatBotResponse) => ({
+    type: CHAT_MESSAGE_RECEIVED,
+    data
+  }));
+
+  if (query !== initializationQuery) {
+    dispatch(onUserMessageSent(query));
+  }
+
+  return axios.get(`https://aceai-dev.leasehawk.com/api/acechatbot`, {
+    params: {
+      query,
+      siteId: getStoredSiteId(),
+      sessionId: getStoredSessionId(),
+    }
+  }).then(({data}: {data: IChatBotResponse}) => {
+    dispatch(onMessageReceived(data));
   });
 };

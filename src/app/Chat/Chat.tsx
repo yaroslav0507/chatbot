@@ -6,8 +6,8 @@ import { Header } from './components/Header';
 import { Body } from './components/Body/Body';
 import { Footer } from './components/Footer';
 import { TypingIndicator } from './components/Body/TypingIndicator';
-import { IChatDispatchProps, IChatStateProps } from './ChatContainer';
-import { RouteComponentProps } from 'react-router';
+import { IChatDispatchProps } from './ChatContainer';
+import { IChatState } from '../appReducer';
 
 const defaultSiteId = '99999';
 
@@ -36,58 +36,51 @@ const ChatComponent = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 3;
-  
   transition: all .3s ease;
   transform: translateY(${props => props.visible ? 0 : '50px'});
   opacity: ${props => props.visible ? 1 : 0}; 
   height: ${props => props.visible ? '1020px' : '10px'}; 
 `;
 
-interface IChatProps extends IChatDispatchProps, IChatStateProps {}
+interface IChatProps extends IChatDispatchProps, IChatState {}
 
 export const Chat: React.FC<IChatProps> = (props) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
-  const [isTyping, setIsTyping] = useState(true);
 
+  // Called once, when component is mounted
   useEffect(() => {
     props.initialize(defaultSiteId);
+    props.sendMessage('Hello');
   }, []);
 
+  // Called when propertyId is changed
   useEffect(() => {
-    if (props.data.propertyId) {
+    if (props.config.propertyId) {
       setTimeout(() => {
         setPopupVisible(true);
-      }, props.data.chatbotPopupNotificationTime || 300);
+      }, props.config.chatbotPopupNotificationTime || 300);
     }
-
-    const interval = setInterval(() => {
-      setIsTyping(Math.random() > 0.5);
-    }, 2000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [props.data.propertyId]);
+  }, [props.config.propertyId]);
 
   const onChatButtonClick = () => {
     setIsOpened(true);
     setPopupVisible(false);
   };
 
-  return props.data.propertyId ? (
+  return props.config.propertyId ? (
     <Root>
       {!isOpened && (
         <>
           <ChatBubblePopup
-            visible={popupVisible && !!props.data.chatbotPopupNotificationMessage}
-            message={props.data.chatbotPopupNotificationMessage}
+            visible={popupVisible && !!props.config.chatbotPopupNotificationMessage}
+            message={props.config.chatbotPopupNotificationMessage}
             onClose={() => setPopupVisible(false)}
           />
 
           <ChatBubble
-            color={props.data.chatbotTriggerColor}
-            image={props.data.chatbotTriggerIconUrl}
+            color={props.config.chatbotTriggerColor}
+            image={props.config.chatbotTriggerIconUrl}
             onClick={onChatButtonClick}
           />
         </>
@@ -95,24 +88,22 @@ export const Chat: React.FC<IChatProps> = (props) => {
 
       <ChatComponent visible={isOpened}>
         <Header
-          title={props.data.chatbotHeaderTitle}
-          description={props.data.chatbotHeaderDescription}
-          bgColor={props.data.chatbotHeaderColor}
-          textColor={props.data.chatbotHeaderTextColor}
-          image={props.data.chatbotHeaderIconUrl}
+          config={props.config}
           onClose={() => setIsOpened(false)}
         />
 
         <Body
-          botMessageBgColor={props.data.chatbotAceConversationBubbleColor}
-          botMessageTextColor={props.data.chatbotAceConversationBubbleTextColor}
-          userMessageBgColor={props.data.chatbotUserConversationBubbleColor}
-          userMessageTextColor={props.data.chatbotUserConversationBubbleTexColor}
+          history={props.history}
+          config={props.config}
+          onQuickReply={(message) => props.sendMessage(message)}
         />
 
-        <Footer/>
+        <Footer
+          loading={props.loading}
+          onSubmit={(message) => props.sendMessage(message)}
+        />
 
-        <TypingIndicator visible={isTyping}/>
+        <TypingIndicator visible={props.loading}/>
       </ChatComponent>
     </Root>
   ) : null;

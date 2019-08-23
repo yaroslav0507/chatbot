@@ -3,6 +3,7 @@ import ChatBotIcon from '../../../images/Chatbot-icon.svg';
 import IconClose from '../../../images/outline-clear-24px.svg';
 import styled from 'styled-components';
 import { styleHoverOpacity } from '../../../styles/shared';
+import { IChatBotConfig } from '../interfaces';
 
 const Root = styled.div`
   position: relative;
@@ -39,25 +40,21 @@ const Icon = styled(ChatBotIcon)`${iconStyle}`;
 const Image = styled.img`${iconStyle}`;
 
 interface IHeaderProps {
-  title: string;
-  description: string;
-  bgColor: string;
-  textColor: string;
-  image: string;
+  config: IChatBotConfig;
   onClose(): void;
 }
 
-export const Header: React.FC<IHeaderProps> = ({title, description, bgColor, textColor, image, onClose}) => {
+export const Header: React.FC<IHeaderProps> = ({config, onClose}) => {
   return (
     <Root
-      color={textColor}
-      background={bgColor}
+      color={config.chatbotHeaderTextColor}
+      background={config.chatbotHeaderColor}
     >
-      {image ? <Image src={image}/> : <Icon/>}
+      {config.chatbotHeaderIconUrl ? <Image src={config.chatbotHeaderIconUrl}/> : <Icon/>}
 
       <div>
-        <SiteName>{title || '{Site Name}'}</SiteName>
-        {description}
+        <SiteName>{config.chatbotHeaderTitle || '{Site Name}'}</SiteName>
+        {config.chatbotHeaderDescription}
       </div>
 
       <CloseChat onClick={onClose}/>

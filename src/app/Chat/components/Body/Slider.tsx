@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import IconArrowLeft from '../../../../images/outline-arrow_back_ios-24px.svg';
 import IconArrowRight from '../../../../images/outline-arrow_forward_ios-24px.svg';
+import { IInfoCard } from '../../interfaces';
 
 const Carousel = styled.div`
   width: 100%;
@@ -11,7 +12,17 @@ const Carousel = styled.div`
   position: relative;
 `;
 
-const Slide = styled.img`
+const Header = styled.div`
+  font-size: 18px;
+  color: #363636;
+  font-weight: 500;
+  line-height: 23px;
+`;
+
+const SlideWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 200px;
 `;
 
@@ -33,13 +44,8 @@ const SlideDescription = styled.div`
   font-size: 14px;
 `;
 
-interface ISlide {
-  img: string;
-  desc: string;
-}
-
 interface ISliderProps {
-  data: ISlide[];
+  data: IInfoCard[];
 }
 
 export const Slider: React.FC<ISliderProps> = ({data}) => {
@@ -60,6 +66,8 @@ export const Slider: React.FC<ISliderProps> = ({data}) => {
     }
   };
 
+  const slide = data[currentSlideIndex];
+
   return (
     <Carousel>
       <CarouselNav
@@ -70,10 +78,11 @@ export const Slider: React.FC<ISliderProps> = ({data}) => {
       </CarouselNav>
 
       <div>
-        <a href={data[currentSlideIndex].img} target="_blank">
-          <Slide src={data[currentSlideIndex].img}/>
-        </a>
-        <SlideDescription>{data[currentSlideIndex].desc}</SlideDescription>
+        <Header>{slide.title}</Header>
+        <SlideWrapper href={slide.image.imageUri} target="_blank">
+          <img src={slide.image.imageUri}/>
+        </SlideWrapper>
+        <SlideDescription>{slide.description}</SlideDescription>
       </div>
 
       <CarouselNav

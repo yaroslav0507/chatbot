@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconPlane from '../../../images/paper-plane-regular.svg';
 import styled from 'styled-components';
 
-const Root = styled.div`
+const Root = styled.form`
   min-height: 60px;
   border-top: 1px solid #ccc;
   display: flex;
@@ -33,7 +33,7 @@ const IconSend = styled(IconPlane)`
   fill: #162A3F;
 `;
 
-const ButtonSend = styled.div`
+const ButtonSend = styled.button`
   width: 50px;
   height: 50px;
   margin-top: -2px;
@@ -43,6 +43,7 @@ const ButtonSend = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
   
   &:hover {
     cursor: pointer;
@@ -50,12 +51,33 @@ const ButtonSend = styled.div`
   }
 `;
 
-export const Footer: React.FC = () => {
-  return (
-    <Root>
-      <Input type="text" placeholder="Start Typing"/>
+interface IFooterProps {
+  loading: boolean;
+  onSubmit(message: string): void;
+}
 
-      <ButtonSend>
+export const Footer: React.FC<IFooterProps> = (props) => {
+  const [message, setMessage] = useState('');
+
+  const onSubmit = (event) => {
+    setMessage('');
+    event.preventDefault();
+    props.onSubmit(message);
+  };
+
+  return (
+    <Root onSubmit={onSubmit}>
+      <Input
+        type="text"
+        value={message}
+        placeholder="Start Typing"
+        onChange={({target: {value}}) => setMessage(value)}
+      />
+
+      <ButtonSend
+        type="submit"
+        disabled={props.loading}
+      >
         <IconSend/>
       </ButtonSend>
     </Root>
