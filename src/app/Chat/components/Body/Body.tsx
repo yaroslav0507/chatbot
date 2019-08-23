@@ -44,42 +44,36 @@ export const Body: React.FC<IBodyProps> = ({config, history, onQuickReply}) => {
     scrollToBottom();
   }, [history]);
 
-  const renderMessage = (message: IChatBotResponse, index: number) => {
-    if (message.payload) {
-      return (
-       <Fragment key={index}>
-         <BotMessage
-           bgColor={config.chatbotAceConversationBubbleColor}
-           textColor={config.chatbotAceConversationBubbleTextColor}
-         >
-           {message.result}
-         </BotMessage>
+  const renderMessage = (message: IChatBotResponse, index: number) => message.payload ? (
+    <Fragment key={index}>
+      <BotMessage
+        bgColor={config.chatbotAceConversationBubbleColor}
+        textColor={config.chatbotAceConversationBubbleTextColor}
+      >
+        {message.result}
+      </BotMessage>
 
-         {message.payload.infoCard && <InfoCard data={message.payload.infoCard}/>}
+      {message.payload.infoCard && <InfoCard data={message.payload.infoCard}/>}
 
-         {message.payload.quickReply.map((reply) => (
-           <AnswerTemplate
-             key={reply.value}
-             inline={reply.display !== 'block'}
-             onClick={() => onQuickReply(reply.value)}
-           >
-             {reply.text}
-           </AnswerTemplate>
-         ))}
-       </Fragment>
-      )
-    } else {
-      return (
-        <CustomerMessage
-          key={index}
-          bgColor={config.chatbotUserConversationBubbleColor}
-          textColor={config.chatbotUserConversationBubbleTexColor}
+      {message.payload.quickReply.map((reply) => (
+        <AnswerTemplate
+          key={reply.value}
+          inline={reply.display !== 'block'}
+          onClick={() => onQuickReply(reply.value)}
         >
-          {message.result}
-        </CustomerMessage>
-      )
-    }
-  };
+          {reply.text}
+        </AnswerTemplate>
+      ))}
+    </Fragment>
+  ) : (
+      <CustomerMessage
+        key={index}
+        bgColor={config.chatbotUserConversationBubbleColor}
+        textColor={config.chatbotUserConversationBubbleTexColor}
+      >
+        {message.result}
+      </CustomerMessage>
+  );
 
   return (
     <Root ref={chatBodyRef}>
