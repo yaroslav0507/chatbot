@@ -6,14 +6,14 @@ import { loadInitialConfiguration, sendMessage } from './chatActions';
 
 export interface IChatDispatchProps {
   sendMessage(query?: string): void;
-  initialize(siteId: string): void;
+  initialize(): void;
 }
 
 const mapStateToProps = (state: IRootState): IRootState => state;
 
 const mapDispatchToProps = (dispatch: Dispatch<IRootState>): IChatDispatchProps => ({
   sendMessage: (query: string) => dispatch(sendMessage(query)),
-  initialize: (siteId: string) => dispatch(loadInitialConfiguration(siteId))
+  initialize: () => dispatch(loadInitialConfiguration())
 });
 
 export const ChatContainer = connect(

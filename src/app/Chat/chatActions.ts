@@ -16,7 +16,11 @@ export const initializationQuery = 'Hello';
 const getStoredSiteId = () => sessionStorage.getItem('siteId');
 const getStoredSessionId = () => sessionStorage.getItem('sessionId');
 
-export const loadInitialConfiguration = (siteId: string) => (dispatch: Dispatch<IRootState>) => {
+const defaultSiteId = '99999';
+const scriptElement = document.getElementById('ace-chat-script');
+const siteId = scriptElement && scriptElement.dataset && scriptElement.dataset.siteId || defaultSiteId;
+
+export const loadInitialConfiguration = () => (dispatch: Dispatch<IRootState>) => {
   if (!getStoredSiteId()) {
     sessionStorage.setItem('siteId', siteId);
   }

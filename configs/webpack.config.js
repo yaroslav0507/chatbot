@@ -17,9 +17,8 @@ module.exports = (env = {}) => {
     },
     output: {
       path: PATHS.dist,
-      filename: isDev ? '[name].js' : '[name].[hash].js',
+      filename: '[name].js',
       publicPath: '/',
-      chunkFilename: '[id].chunk.js'
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],

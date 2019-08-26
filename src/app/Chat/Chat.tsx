@@ -9,8 +9,6 @@ import { TypingIndicator } from './components/Body/TypingIndicator';
 import { IChatDispatchProps } from './ChatContainer';
 import { IRootState } from '../appReducer';
 
-const defaultSiteId = '99999';
-
 const Root = styled.div`
   right: 0;
   bottom: 0;
@@ -50,7 +48,7 @@ export const Chat: React.FC<IChatProps> = (props) => {
 
   // Called once, when component is mounted
   useEffect(() => {
-    props.initialize(defaultSiteId);
+    props.initialize();
   }, []);
 
   // Called when propertyId is changed
