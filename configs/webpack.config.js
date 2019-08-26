@@ -26,13 +26,7 @@ module.exports = (env = {}) => {
       modules: ['src', 'node_modules']
     },
     module: {
-      rules: rules(env),
-      // loaders: [{
-      //   test: /plugin\.css$/,
-      //   loaders: [
-      //     'style-loader', 'css',
-      //   ],
-      // }]
+      rules: rules(env)
     },
     plugins: plugins(isDev)
   };

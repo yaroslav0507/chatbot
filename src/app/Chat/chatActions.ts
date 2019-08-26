@@ -3,7 +3,12 @@ import { Dispatch } from 'redux';
 import { IRootState } from '../appReducer';
 import { IChatBotConfig, IChatBotResponse } from './interfaces';
 import { createAction } from 'typesafe-actions';
-import { CHAT_CONFIG_LOADED, CHAT_MESSAGE_RECEIVED, USER_MESSAGE_SENT } from './chatReducer';
+import {
+  CHAT_CONFIG_LOADED,
+  CHAT_MESSAGE_RECEIVED,
+  CHAT_MESSAGE_REQUEST_FAILED,
+  USER_MESSAGE_SENT
+} from './chatReducer';
 import uuid from 'uuid';
 
 export const initializationQuery = 'Hello';
@@ -48,6 +53,8 @@ export const sendMessage = (query: string) => (dispatch: Dispatch<IRootState>) =
     data
   }));
 
+  const onMessageFailed = createAction(CHAT_MESSAGE_REQUEST_FAILED);
+
   if (query !== initializationQuery) {
     dispatch(onUserMessageSent(query));
   }
@@ -60,5 +67,7 @@ export const sendMessage = (query: string) => (dispatch: Dispatch<IRootState>) =
     }
   }).then(({data}: {data: IChatBotResponse}) => {
     dispatch(onMessageReceived(data));
+  }).catch(() => {
+    dispatch(onMessageFailed());
   });
 };

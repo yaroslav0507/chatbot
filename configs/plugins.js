@@ -27,10 +27,7 @@ module.exports = (isDev) => (
     }),
     ...(isDev
       ? [
-        new webpack.HotModuleReplacementPlugin({
-          // multiStep: true, // better performance with many files
-        }),
-        // new DashboardPlugin(),
+        new webpack.HotModuleReplacementPlugin({}),
         new webpack.NamedModulesPlugin()
       ]
       : []),
