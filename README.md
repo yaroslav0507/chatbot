@@ -34,8 +34,8 @@
 
 #### - Usage
 
-Add next code snippet before </body> closing tag.
+Add next code snippet before </body> closing tag. Where data-site-id is your SiteID.
 
 ```
-<script type="text/javascript" id="ace-chat-script" data-site-id="99999" src="<ace_chat_src>"></script></body>
+<script type="text/javascript" id="ace-chat-script" data-site-id="99999" src="<ace_chat_src>"></script>
 ```
