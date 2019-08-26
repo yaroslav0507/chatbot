@@ -63,7 +63,7 @@ export const sendMessage = (query: string) => (dispatch: Dispatch<IRootState>) =
     dispatch(onUserMessageSent(query));
   }
 
-  return axios.get(`/acechatbot`, {
+  return axios.get(`/acechatbot2`, {
     params: {
       query,
       siteId: getStoredSiteId(),
