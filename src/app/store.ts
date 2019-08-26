@@ -38,6 +38,3 @@ function configureStore(initialState?: IRootState) {
 
 // pass an optional param to rehydrate state on app start
 export const store = configureStore();
-
-// export store singleton instance
-export default store;

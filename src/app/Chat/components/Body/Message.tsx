@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { styleHoverOpacity } from '../../../../styles/shared';
+import { styleHoverOpacity } from '../../../styles';
 
 const Message = styled.div`
   clear: both;

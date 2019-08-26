@@ -1,26 +1,10 @@
 const webpack = require('webpack');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (isDev) => (
   [
-    new ExtractTextPlugin({
-      filename: 'app.bundle.css',
-      disable: process.env.NODE_ENV === 'development'
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
-      'process.env.REACT_APP_BASE_URL': JSON.stringify(process.env.REACT_APP_BASE_URL),
-      'process.env.REACT_APP_IDENTITY_URL': JSON.stringify(process.env.REACT_APP_IDENTITY_URL)
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: module =>
-        module.context && module.context.indexOf('node_modules') !== -1
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest'
     }),
     new HtmlWebpackPlugin({
       template: './index.html'
@@ -43,7 +27,7 @@ module.exports = (isDev) => (
            screw_ie8: true
          },
          comments: false,
-         sourceMap: true
+         sourceMap: false
         })
       ]
       : []),

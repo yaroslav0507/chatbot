@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ChatBotIcon from '../../../../images/Chatbot-icon.svg';
-import { styleHoverOpacity } from '../../../../styles/shared';
+import { styleHoverOpacity } from '../../../styles';
 
 const Root = styled.div`
   z-index: 2;

@@ -8,7 +8,7 @@ import {
   CHAT_MESSAGE_RECEIVED,
   CHAT_MESSAGE_REQUEST_FAILED,
   USER_MESSAGE_SENT
-} from './chatReducer';
+} from '../appReducer';
 import uuid from 'uuid';
 
 export const initializationQuery = 'Hello';
@@ -17,13 +17,6 @@ const getStoredSiteId = () => sessionStorage.getItem('siteId');
 const getStoredSessionId = () => sessionStorage.getItem('sessionId');
 
 export const loadInitialConfiguration = (siteId: string) => (dispatch: Dispatch<IRootState>) => {
-  dispatch(sendMessage(initializationQuery));
-
-  const onDataLoadedAction = createAction(CHAT_CONFIG_LOADED, (data: IChatBotConfig) => ({
-    type: CHAT_CONFIG_LOADED,
-    data,
-  }));
-
   if (!getStoredSiteId()) {
     sessionStorage.setItem('siteId', siteId);
   }
@@ -33,7 +26,14 @@ export const loadInitialConfiguration = (siteId: string) => (dispatch: Dispatch<
     sessionStorage.setItem('sessionId', sessionId);
   }
 
-  axios.get(`https://aceai-dev.leasehawk.com/api/AceChatbotStyle`, {
+  dispatch(sendMessage(initializationQuery));
+
+  const onDataLoadedAction = createAction(CHAT_CONFIG_LOADED, (data: IChatBotConfig) => ({
+    type: CHAT_CONFIG_LOADED,
+    data,
+  }));
+
+  axios.get(`/AceChatbotStyle`, {
     params: {
       siteId
     }
@@ -59,7 +59,7 @@ export const sendMessage = (query: string) => (dispatch: Dispatch<IRootState>) =
     dispatch(onUserMessageSent(query));
   }
 
-  return axios.get(`https://aceai-dev.leasehawk.com/api/acechatbot`, {
+  return axios.get(`/acechatbot`, {
     params: {
       query,
       siteId: getStoredSiteId(),

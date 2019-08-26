@@ -4,8 +4,6 @@
 
 `npm run dev:dashboard` - start dev-server with `webpack-dashboard`
 
-`npm run dev:awesome` - start dev-server with `awesome-typescript-loader`
-
 #### - Type checking
 
 `npm run tsc` - entire project type-check
@@ -30,10 +28,6 @@
 
 `npm run lint` - run linter (tslint)
 
-`npm run test` - run tests with jest runner
-
-`npm run test:update` - update jest snapshots
-
 `npm run precommit` - pre commit git hook - linter
 
 `npm run prepush` - pre push git hook - linter, tests and check types
@@ -43,10 +37,3 @@
 ~~`npm run deploy` - commit and push all changes found in `/dist` folder to "gh-pages" branch~~
 
 ---
-
-## Adding Folders
-
-Add folder to the following files for path:
-
-`webpack.config.js`
-`tsconfig.json`

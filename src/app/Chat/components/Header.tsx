@@ -2,7 +2,7 @@ import React from 'react';
 import ChatBotIcon from '../../../images/Chatbot-icon.svg';
 import IconClose from '../../../images/outline-clear-24px.svg';
 import styled from 'styled-components';
-import { styleHoverOpacity } from '../../../styles/shared';
+import { styleHoverOpacity } from '../../styles';
 const Root = styled.div`
   width: 100%;
   height: 82px;

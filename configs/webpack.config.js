@@ -22,7 +22,7 @@ module.exports = (env = {}) => {
       chunkFilename: '[id].chunk.js'
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.scss'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       modules: ['src', 'node_modules']
     },
     module: {

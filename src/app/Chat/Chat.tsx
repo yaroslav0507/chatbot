@@ -7,7 +7,7 @@ import { Body } from './components/Body/Body';
 import { Footer } from './components/Footer';
 import { TypingIndicator } from './components/Body/TypingIndicator';
 import { IChatDispatchProps } from './ChatContainer';
-import { IChatState } from '../appReducer';
+import { IRootState } from '../appReducer';
 
 const defaultSiteId = '99999';
 
@@ -42,7 +42,7 @@ const ChatComponent = styled.div`
   transform: translateY(${props => props.visible ? 0 : '50px'});
 `;
 
-interface IChatProps extends IChatDispatchProps, IChatState {}
+interface IChatProps extends IChatDispatchProps, IRootState {}
 
 export const Chat: React.FC<IChatProps> = (props) => {
   const [popupVisible, setPopupVisible] = useState(false);

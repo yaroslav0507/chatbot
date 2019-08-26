@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Chat } from './Chat';
-import { IChatState, IRootState } from '../appReducer';
+import { IRootState } from '../appReducer';
 import { Dispatch } from 'redux';
 import { loadInitialConfiguration, sendMessage } from './chatActions';
 
@@ -9,11 +9,7 @@ export interface IChatDispatchProps {
   initialize(siteId: string): void;
 }
 
-const mapStateToProps = (state: IRootState): IChatState => ({
-  config: state.chat.config,
-  history: state.chat.history,
-  loading: state.chat.loading
-});
+const mapStateToProps = (state: IRootState): IRootState => state;
 
 const mapDispatchToProps = (dispatch: Dispatch<IRootState>): IChatDispatchProps => ({
   sendMessage: (query: string) => dispatch(sendMessage(query)),

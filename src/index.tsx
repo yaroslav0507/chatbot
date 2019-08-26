@@ -5,9 +5,6 @@ import axios from 'axios';
 // tslint:disable:no-import-side-effect
 // side-effect imports here
 import 'babel-polyfill';
-import 'url-search-params-polyfill';
-import 'formdata-polyfill';
-import './styles/main.scss';
 // tslint:enable:no-import-side-effect
 
 import { App } from './app/App';
@@ -17,12 +14,14 @@ declare const System: {
   import<T = any>(module: string): Promise<T>;
 };
 
-export const BASE_URL = '/';
+export const BASE_URL = 'https://aceai-dev.leasehawk.com/api/';
 
 axios.defaults.baseURL = BASE_URL;
 
 const renderRoot = (app: JSX.Element) => {
-  ReactDOM.render(app, document.getElementById('root'));
+  const rootElement = document.createElement('div');
+  document.body.appendChild(rootElement);
+  ReactDOM.render(app, rootElement);
 };
 
 if (process.env.NODE_ENV === 'production') {
