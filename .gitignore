@@ -5,6 +5,7 @@
 
 **/**/pkg/**
 **/bin/**
+**/dist/**
 
 # User-specific files
 *.suo
