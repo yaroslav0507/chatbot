@@ -38,9 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 
   if (module.hot) {
-    // app
     module.hot.accept('./app/App', async () => {
-      // const NextApp = require('./app').App;
       const NextApp = (await System.import('./app/App')).App;
       renderRoot(
         <AppContainer>

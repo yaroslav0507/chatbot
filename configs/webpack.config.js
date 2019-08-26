@@ -17,7 +17,7 @@ module.exports = (env = {}) => {
     },
     output: {
       path: PATHS.dist,
-      filename: '[name].js',
+      filename: 'ace.js',
       publicPath: '/',
     },
     resolve: {

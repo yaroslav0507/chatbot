@@ -32,8 +32,10 @@
 
 `npm run prepush` - pre push git hook - linter, tests and check types
 
-#### - Deployment
+#### - Usage
 
-~~`npm run deploy` - commit and push all changes found in `/dist` folder to "gh-pages" branch~~
+Add next code snippet before </body> closing tag.
 
----
+```
+<script type="text/javascript" id="ace-chat-script" data-site-id="99999" src="<ace_chat_src>"></script></body>
+```
