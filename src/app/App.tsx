@@ -11,7 +11,7 @@ interface IAppComponentProps {
   history: History;
 }
 
-export const App: React.FC<IAppComponentProps> = ({store, history}) => (
+export const App: React.FC<IAppComponentProps> = ({store}) => (
   <Provider store={store}>
     <GlobalStyles />
     <ChatContainer />

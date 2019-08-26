@@ -14,7 +14,7 @@ declare const System: {
   import<T = any>(module: string): Promise<T>;
 };
 
-export const BASE_URL = 'http://aceai-dev2.us-east-1.elasticbeanstalk.com/api/';
+export const BASE_URL = 'https://aceai-dev.leasehawk.com/api';
 
 axios.defaults.baseURL = BASE_URL;
 
