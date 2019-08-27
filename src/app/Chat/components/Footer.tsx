@@ -10,6 +10,7 @@ const Root = styled.form`
   justify-content: space-between;
   padding: 5px 15px;
   background-color: #fff;
+  z-index: 1;
 `;
 
 const Input = styled.input`

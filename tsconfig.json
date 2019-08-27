@@ -25,18 +25,14 @@
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
-    "types": ["webpack-env", "jest"],
+    "types": ["webpack-env"],
     "strict": true,
     "noEmit": true,
     "strictPropertyInitialization": false,
     "paths": {
       "*": [
         "types/*"
-      ],
-      "@material-ui/core": ["./material-ui/src"],
-      "@material-ui/core/*": ["./material-ui/src/*"],
-      "@material-ui/lab": ["./material-ui-lab/src"],
-      "@material-ui/lab/*": ["./material-ui-lab/src/*"]
+      ]
     }
   },
   "include": ["src/**/*"],

@@ -8,7 +8,7 @@ import 'babel-polyfill';
 // tslint:enable:no-import-side-effect
 
 import { App } from './app/App';
-import { store, browserHistory } from './app/store';
+import { store } from './app/store';
 
 declare const System: {
   import<T = any>(module: string): Promise<T>;
@@ -25,7 +25,7 @@ const renderRoot = (app: JSX.Element) => {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  renderRoot(<App store={store} history={browserHistory} />);
+  renderRoot(<App store={store} />);
 } else {
   // removed in production, hot-reload config
   // tslint:disable-next-line:no-var-requires
@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
   renderRoot(
     <AppContainer warnings={false}>
-      <App store={store} history={browserHistory} />
+      <App store={store} />
     </AppContainer>
   );
 
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'production') {
       const NextApp = (await System.import('./app/App')).App;
       renderRoot(
         <AppContainer>
-          <NextApp store={store} history={browserHistory} />
+          <NextApp store={store} />
         </AppContainer>
       );
     });
@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === 'production') {
     // reducers
     module.hot.accept('./app/appReducer', () => {
       const newRootReducer = require('./app/appReducer').default;
-      store.replaceReducer(newRootReducer);
+      store.store.replaceReducer(newRootReducer);
     });
   }
 }

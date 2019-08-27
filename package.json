@@ -21,12 +21,14 @@
     "prepush": "yarn run lint & yarn run tsc"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^6.0.0",
     "redux": "^3.7.2",
+    "redux-persist": "^5.10.0",
+    "redux-persist-expire": "^1.1.0",
     "redux-thunk": "^2.2.0",
     "tslib": "^1.8.1",
     "typesafe-actions": "^1.1.2",
@@ -52,6 +54,7 @@
     "rimraf": "^2.6.2",
     "smooth-scroll-into-view-if-needed": "^1.1.23",
     "styled-components": "^4.3.2",
+    "ts-loader": "^3.5.0",
     "tslint": "^5.9.1",
     "tslint-eslint-rules": "^5.1.0",
     "tslint-react": "^3.4.0",
@@ -60,7 +63,7 @@
     "webpack": "3",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dashboard": "^0.4.0",
-    "webpack-dev-server": "^2.11.0",
+    "webpack-dev-server": "^2.11.5",
     "yarn": "^1.6.0",
     "yup": "^0.26.6"
   }

@@ -3,15 +3,15 @@ import { Dispatch } from 'redux';
 import { IRootState } from '../appReducer';
 import { IChatBotConfig, IChatBotResponse } from './interfaces';
 import { createAction } from 'typesafe-actions';
+import uuid from 'uuid';
 import {
   CHAT_CONFIG_LOADED,
   CHAT_MESSAGE_RECEIVED,
   CHAT_MESSAGE_REQUEST_FAILED,
   USER_MESSAGE_SENT
-} from '../appReducer';
-import uuid from 'uuid';
+} from './chatReducer';
 
-export const initializationQuery = 'Hello';
+export const initializationQuery = 'Hi, Hello';
 
 const getStoredSiteId = () => sessionStorage.getItem('siteId');
 const getStoredSessionId = () => sessionStorage.getItem('sessionId');
@@ -20,7 +20,7 @@ const defaultSiteId = '99999';
 const scriptElement = document.getElementById('ace-chat-script');
 const siteId = scriptElement && scriptElement.dataset && scriptElement.dataset.siteId || defaultSiteId;
 
-export const loadInitialConfiguration = () => (dispatch: Dispatch<IRootState>) => {
+export const loadInitialConfiguration = () => (dispatch: Dispatch<IRootState>, getState: () => IRootState) => {
   if (!getStoredSiteId()) {
     sessionStorage.setItem('siteId', siteId);
   }
@@ -30,7 +30,11 @@ export const loadInitialConfiguration = () => (dispatch: Dispatch<IRootState>) =
     sessionStorage.setItem('sessionId', sessionId);
   }
 
-  dispatch(sendMessage(initializationQuery));
+  const state = getState();
+
+  if (!state.chat.history.length) {
+    dispatch(sendMessage(initializationQuery));
+  }
 
   const onDataLoadedAction = createAction(CHAT_CONFIG_LOADED, (data: IChatBotConfig) => ({
     type: CHAT_CONFIG_LOADED,
